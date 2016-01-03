@@ -9,6 +9,7 @@
 import Foundation
 
 class CheckListItem {
+    //TODO: add the enumeration for row accessories as a property
     let text: String
     private var checked = false
     
