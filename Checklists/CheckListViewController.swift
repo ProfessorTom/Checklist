@@ -53,7 +53,6 @@ class CheckListViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("CheckListItem", forIndexPath: indexPath)
         let label = cell.viewWithTag(1000) as! UILabel
 //        label.text = "Label" //if you don't reset the text, you get the old text value
-        
 
         cell.accessoryType = checkListItems[indexPath.row].isChecked() ? .Checkmark : .None
         label.text = checkListItems[indexPath.row].text
@@ -68,6 +67,16 @@ class CheckListViewController: UITableViewController {
         }
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            checkListItems.removeAtIndex(indexPath.row)
+            
+            let indexPaths = [indexPath]
+            tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Middle)
+        }
     }
     
     //pragma MARK:- add
