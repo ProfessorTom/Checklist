@@ -16,6 +16,13 @@ class AddItemViewController: UITableViewController {
     }
     
     @IBAction func done() {
+        print("luser gave us: \(textField.text!)")
         dismissViewControllerAnimated(true, completion: nil)
+    }
+     
+    @IBOutlet weak var textField: UITextField!
+    
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        return nil
     }
 }
