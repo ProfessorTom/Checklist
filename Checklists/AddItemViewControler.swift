@@ -9,11 +9,18 @@
 import Foundation
 import UIKit
 
+protocol AddItemViewControllerDelegate: class {
+    func addItemViewControllerDidCancel(controller: AddItemViewController)
+    func addItemViewController(controller: AddItemViewController, didFinishAddingItem item: CheckListItem)
+}
+
 class AddItemViewController: UITableViewController, UITextFieldDelegate {
     
     //prgam MARK:- outlets
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
     @IBOutlet weak var textField: UITextField!
+    
+    weak var delegate: AddItemViewControllerDelegate?
     
     //pragma MARK:- ViewController lifecycle methods
     override func viewWillAppear(animated: Bool) {
@@ -23,12 +30,13 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
     
     //pragma MARK:- button handlers
     @IBAction func cancel() {
-        dismissViewControllerAnimated(true, completion: nil)
+        delegate?.addItemViewControllerDidCancel(self)
     }
     
     @IBAction func done() {
-        print("luser gave us: \(textField.text!)")
-        dismissViewControllerAnimated(true, completion: nil)
+//        print("luser gave us: \(textField.text!)")
+        let item = CheckListItem(text: textField.text!, checked: false)
+        delegate?.addItemViewController(self, didFinishAddingItem: item)
     }
     
     
