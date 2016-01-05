@@ -12,7 +12,7 @@ import UIKit
 class AddItemViewController: UITableViewController, UITextFieldDelegate {
     
     //prgam MARK:- outlets
-    @IBOutlet weak var doneButton: UIBarButtonItem!
+    @IBOutlet weak var doneBarButton: UIBarButtonItem!
     @IBOutlet weak var textField: UITextField!
     
     //pragma MARK:- ViewController lifecycle methods
@@ -38,5 +38,11 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
     }
     
     //pragma MARK:- textField delegate methods
-    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        let oldText: NSString = textField.text!
+        let newText: NSString = oldText.stringByReplacingCharactersInRange(range, withString: string)
+        
+        doneBarButton.enabled = (newText.length > 0)
+        return true
+    }
 }

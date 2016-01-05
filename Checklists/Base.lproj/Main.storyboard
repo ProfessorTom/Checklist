@@ -39,7 +39,7 @@
                     <navigationItem key="navigationItem" title="Checklists" id="bh9-md-BFX">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Vro-b8-8Wi">
                             <connections>
-                                <segue destination="EJt-lH-taH" kind="show" id="ws3-T9-OsV"/>
+                                <segue destination="EJt-lH-taH" kind="show" id="AyJ-MI-FcB"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -92,14 +92,14 @@
                                 <action selector="cancel" destination="TqS-YK-kc6" id="Q7k-ht-O1Z"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="aDn-R7-Ja2">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="done" id="aDn-R7-Ja2">
                             <connections>
                                 <action selector="done" destination="TqS-YK-kc6" id="V5t-Gg-161"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="doneButton" destination="aDn-R7-Ja2" id="cVe-3N-qTa"/>
+                        <outlet property="doneBarButton" destination="aDn-R7-Ja2" id="HR7-95-0i0"/>
                         <outlet property="textField" destination="F5R-9j-2dc" id="PnL-zV-4p0"/>
                     </connections>
                 </tableViewController>
