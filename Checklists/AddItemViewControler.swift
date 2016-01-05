@@ -11,6 +11,11 @@ import UIKit
 
 class AddItemViewController: UITableViewController {
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        textField.becomeFirstResponder()
+    }
+    
     @IBAction func cancel() {
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -19,7 +24,7 @@ class AddItemViewController: UITableViewController {
         print("luser gave us: \(textField.text!)")
         dismissViewControllerAnimated(true, completion: nil)
     }
-     
+    
     @IBOutlet weak var textField: UITextField!
     
     override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
