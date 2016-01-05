@@ -78,18 +78,5 @@ class CheckListViewController: UITableViewController {
             tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Middle)
         }
     }
-    
-    //pragma MARK:- add
-    @IBAction func addItem() {
-        let newRowIndex = checkListItems.count
-        
-        let item = CheckListItem(text: "I am row \(newRowIndex)", checked: false)
-        checkListItems.append(item)
-        
-        let indexPath = NSIndexPath(forRow: newRowIndex, inSection: 0)
-        let indexPaths = [indexPath]
-        tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-    }
-
 }
 
