@@ -52,9 +52,10 @@ class CheckListViewController: UITableViewController, AddItemViewControllerDeleg
 
         let cell = tableView.dequeueReusableCellWithIdentifier("CheckListItem", forIndexPath: indexPath)
         let label = cell.viewWithTag(1000) as! UILabel
+        let checkmark = cell.viewWithTag(1001) as! UILabel
 //        label.text = "Label" //if you don't reset the text, you get the old text value
 
-        cell.accessoryType = checkListItems[indexPath.row].isChecked() ? .Checkmark : .None
+        checkmark.text = checkListItems[indexPath.row].isChecked() ? "√" : ""
         label.text = checkListItems[indexPath.row].text
         
         return cell
@@ -63,7 +64,9 @@ class CheckListViewController: UITableViewController, AddItemViewControllerDeleg
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let cell = tableView.cellForRowAtIndexPath(indexPath) {
             checkListItems[indexPath.row].toggleChecked()
-            cell.accessoryType = checkListItems[indexPath.row].isChecked() ? .Checkmark : .None
+            
+            let checkmark = cell.viewWithTag(1001) as! UILabel
+            checkmark.text = checkListItems[indexPath.row].isChecked() ? "√" : ""
         }
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -96,12 +99,30 @@ class CheckListViewController: UITableViewController, AddItemViewControllerDeleg
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "AddItem" {
-            let navigationControler = segue.destinationViewController as! UINavigationController
-            let controler = navigationControler.topViewController as! AddItemViewController
-            controler.delegate = self
+    func addItemViewController(controller: AddItemViewController, didFinishEditingItem item: CheckListItem) {
+        var indexPaths: [NSIndexPath]
+        if let index = checkListItems.indexOf(item) {
+            indexPaths = [NSIndexPath(forItem: index, inSection: 0)]
+        } else {
+            indexPaths = [NSIndexPath()]
         }
+        
+        self.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+
+        let navigationControler = segue.destinationViewController as! UINavigationController
+        let controller = navigationControler.topViewController as! AddItemViewController
+        controller.delegate = self
+        
+        if segue.identifier == "EditItem" {
+            if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
+                controller.itemToEdit = checkListItems[indexPath.row]
+            }
+        }
+
     }
 }
 

@@ -12,6 +12,7 @@ import UIKit
 protocol AddItemViewControllerDelegate: class {
     func addItemViewControllerDidCancel(controller: AddItemViewController)
     func addItemViewController(controller: AddItemViewController, didFinishAddingItem item: CheckListItem)
+    func addItemViewController(controller: AddItemViewController, didFinishEditingItem item: CheckListItem)
 }
 
 class AddItemViewController: UITableViewController, UITextFieldDelegate {
@@ -21,11 +22,22 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var textField: UITextField!
     
     weak var delegate: AddItemViewControllerDelegate?
+    var itemToEdit: CheckListItem?
     
     //pragma MARK:- ViewController lifecycle methods
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         textField.becomeFirstResponder()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if let item = itemToEdit {
+            title = "Edit Item"
+            textField.text = item.text
+            doneBarButton.enabled = true
+        }
     }
     
     //pragma MARK:- button handlers
@@ -34,9 +46,13 @@ class AddItemViewController: UITableViewController, UITextFieldDelegate {
     }
     
     @IBAction func done() {
-//        print("luser gave us: \(textField.text!)")
+        if let item = itemToEdit {
+         item.text = textField.text!
+            delegate?.addItemViewController(self, didFinishEditingItem: item)
+        } else {
         let item = CheckListItem(text: textField.text!, checked: false)
         delegate?.addItemViewController(self, didFinishAddingItem: item)
+        }
     }
     
     

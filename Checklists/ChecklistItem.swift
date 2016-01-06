@@ -8,10 +8,10 @@
 
 import Foundation
 
-class CheckListItem {
+class CheckListItem: NSObject {
     //TODO: add the enumeration for row accessories as a property
-    let text: String
-    private var checked = false
+    var text: String
+    var checked = false
     
     init(text: String, checked: Bool) {
         self.text = text
