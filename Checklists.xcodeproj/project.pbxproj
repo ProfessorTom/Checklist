@@ -13,19 +13,19 @@
 		972E7C171C387A2A00EBB3CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 972E7C161C387A2A00EBB3CF /* Assets.xcassets */; };
 		972E7C1A1C387A2A00EBB3CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 972E7C181C387A2A00EBB3CF /* LaunchScreen.storyboard */; };
 		97B945E51C389D650037CFCA /* ChecklistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B945E41C389D650037CFCA /* ChecklistItem.swift */; };
-		97B945E71C3B377B0037CFCA /* AddItemViewControler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B945E61C3B377B0037CFCA /* AddItemViewControler.swift */; };
+		97B945E71C3B377B0037CFCA /* ItemDetailViewControler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B945E61C3B377B0037CFCA /* ItemDetailViewControler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		972E7C0C1C387A2A00EBB3CF /* Checklists.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Checklists.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		972E7C0F1C387A2A00EBB3CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		972E7C111C387A2A00EBB3CF /* CheckListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListViewController.swift; sourceTree = "<group>"; };
+		972E7C111C387A2A00EBB3CF /* CheckListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CheckListViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		972E7C141C387A2A00EBB3CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		972E7C161C387A2A00EBB3CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		972E7C191C387A2A00EBB3CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		972E7C1B1C387A2A00EBB3CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97B945E41C389D650037CFCA /* ChecklistItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChecklistItem.swift; sourceTree = "<group>"; };
-		97B945E61C3B377B0037CFCA /* AddItemViewControler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddItemViewControler.swift; sourceTree = "<group>"; };
+		97B945E61C3B377B0037CFCA /* ItemDetailViewControler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ItemDetailViewControler.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +62,7 @@
 				972E7C111C387A2A00EBB3CF /* CheckListViewController.swift */,
 				97B945E41C389D650037CFCA /* ChecklistItem.swift */,
 				972E7C131C387A2A00EBB3CF /* Main.storyboard */,
-				97B945E61C3B377B0037CFCA /* AddItemViewControler.swift */,
+				97B945E61C3B377B0037CFCA /* ItemDetailViewControler.swift */,
 				972E7C161C387A2A00EBB3CF /* Assets.xcassets */,
 				972E7C181C387A2A00EBB3CF /* LaunchScreen.storyboard */,
 				972E7C1B1C387A2A00EBB3CF /* Info.plist */,
@@ -141,7 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97B945E71C3B377B0037CFCA /* AddItemViewControler.swift in Sources */,
+				97B945E71C3B377B0037CFCA /* ItemDetailViewControler.swift in Sources */,
 				972E7C121C387A2A00EBB3CF /* CheckListViewController.swift in Sources */,
 				97B945E51C389D650037CFCA /* ChecklistItem.swift in Sources */,
 				972E7C101C387A2A00EBB3CF /* AppDelegate.swift in Sources */,

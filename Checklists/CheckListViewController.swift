@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CheckListViewController: UITableViewController, AddItemViewControllerDelegate {
+class CheckListViewController: UITableViewController, ItemDetailViewControllerDelegate {
     
     var checkListItems: [CheckListItem]
     
@@ -82,12 +82,12 @@ class CheckListViewController: UITableViewController, AddItemViewControllerDeleg
         }
     }
     
-    //pragma MARK:- AddItemViewControllerDelegate methods
-    func addItemViewControllerDidCancel(controller: AddItemViewController) {
+    //pragma MARK:- ItemDetailViewControllerDelegate methods
+    func itemDetailViewControllerDidCancel(controller: ItemDetailViewController) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func addItemViewController(controller: AddItemViewController, didFinishAddingItem item: CheckListItem) {
+    func itemDetailViewController(controller: ItemDetailViewController, didFinishAddingItem item: CheckListItem) {
         
         let newRowIndex = checkListItems.count
         checkListItems.append(item)
@@ -99,7 +99,7 @@ class CheckListViewController: UITableViewController, AddItemViewControllerDeleg
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func addItemViewController(controller: AddItemViewController, didFinishEditingItem item: CheckListItem) {
+    func itemDetailViewController(controller: ItemDetailViewController, didFinishEditingItem item: CheckListItem) {
         var indexPaths: [NSIndexPath]
         if let index = checkListItems.indexOf(item) {
             indexPaths = [NSIndexPath(forItem: index, inSection: 0)]
@@ -114,7 +114,7 @@ class CheckListViewController: UITableViewController, AddItemViewControllerDeleg
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 
         let navigationControler = segue.destinationViewController as! UINavigationController
-        let controller = navigationControler.topViewController as! AddItemViewController
+        let controller = navigationControler.topViewController as! ItemDetailViewController
         controller.delegate = self
         
         if segue.identifier == "EditItem" {
