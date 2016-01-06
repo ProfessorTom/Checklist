@@ -14,22 +14,11 @@ class CheckListViewController: UITableViewController, ItemDetailViewControllerDe
     
     
     required init?(coder aDecoder: NSCoder) {
-
-        let row0item = CheckListItem(text: "This is the song that never ends", checked: true)
-        let row1item = CheckListItem(text: "Round the rugged rock, the ragged rascle ran", checked: true)
-//        let row2item = CheckListItem(text: "She sells seashells by the seashore", checked: true)
-        let row2item = CheckListItem(text: "Label", checked: true)
-        let row3item = CheckListItem(text: "Learn iOS Development", checked: true)
-        let row4item = CheckListItem(text: "Eat ice cream", checked: true)
-        
         checkListItems = [CheckListItem]()
-        checkListItems.append(row0item)
-        checkListItems.append(row1item)
-        checkListItems.append(row2item)
-        checkListItems.append(row3item)
-        checkListItems.append(row4item)
         
         super.init(coder: aDecoder)
+//        print("Documents folder is \(documentsDirectory())")
+        loadCheckListItems()
     }
 
     override func viewDidLoad() {
@@ -70,6 +59,7 @@ class CheckListViewController: UITableViewController, ItemDetailViewControllerDe
         }
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        saveChecklistItems()
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -79,6 +69,7 @@ class CheckListViewController: UITableViewController, ItemDetailViewControllerDe
             
             let indexPaths = [indexPath]
             tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Middle)
+            saveChecklistItems()
         }
     }
     
@@ -97,6 +88,7 @@ class CheckListViewController: UITableViewController, ItemDetailViewControllerDe
         tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
         
         dismissViewControllerAnimated(true, completion: nil)
+        saveChecklistItems()
     }
     
     func itemDetailViewController(controller: ItemDetailViewController, didFinishEditingItem item: CheckListItem) {
@@ -109,6 +101,7 @@ class CheckListViewController: UITableViewController, ItemDetailViewControllerDe
         
         self.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
         dismissViewControllerAnimated(true, completion: nil)
+        saveChecklistItems()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -122,7 +115,47 @@ class CheckListViewController: UITableViewController, ItemDetailViewControllerDe
                 controller.itemToEdit = checkListItems[indexPath.row]
             }
         }
-
+    }
+    
+    //pragma MARK:- documents directory methods
+    func documentsDirectory() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        return paths[0]
+    }
+    
+    func dataFilePath() ->String {
+        return (documentsDirectory() as NSString).stringByAppendingPathComponent("Checklists.plist")
+    }
+    
+    func saveChecklistItems() {
+        let data = NSMutableData()
+        let archiver = NSKeyedArchiver(forWritingWithMutableData: data)
+        
+        archiver.encodeObject(checkListItems, forKey: "CheckListItems")
+        archiver.finishEncoding()
+        
+        data.writeToFile(dataFilePath(), atomically: true)
+    }
+    
+    func loadCheckListItems() {
+        let path = dataFilePath()
+        print("path: \(path)")
+        print("file exists at path: \(NSFileManager.defaultManager().fileExistsAtPath(path))")
+        
+        if NSFileManager.defaultManager().fileExistsAtPath(path) {
+            if let data = NSData(contentsOfFile: path) {
+                let unarchiver = NSKeyedUnarchiver(forReadingWithData: data)
+                checkListItems = unarchiver.decodeObjectForKey("CheckListItems") as! [CheckListItem]
+                
+                var counter = 0
+                for item in checkListItems {
+                    print("item \(counter): \(item.text)")
+                    counter++
+                }
+                unarchiver.finishDecoding()
+            }
+        }
+        
     }
 }
 
