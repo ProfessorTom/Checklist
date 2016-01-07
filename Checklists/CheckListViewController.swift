@@ -147,9 +147,9 @@ class CheckListViewController: UITableViewController, ItemDetailViewControllerDe
                 let unarchiver = NSKeyedUnarchiver(forReadingWithData: data)
                 checkListItems = unarchiver.decodeObjectForKey("CheckListItems") as! [CheckListItem]
                 
-                for item in checkListItems {
-                    print("item \(checkListItems.indexOf(item)! + 1): \(item.text)")
-                }
+//                for item in checkListItems {
+//                    print("item \(checkListItems.indexOf(item)! + 1): \(item.text)")
+//                }
                 
                 unarchiver.finishDecoding()
             }
