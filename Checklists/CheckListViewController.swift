@@ -139,19 +139,18 @@ class CheckListViewController: UITableViewController, ItemDetailViewControllerDe
     
     func loadCheckListItems() {
         let path = dataFilePath()
-        print("path: \(path)")
-        print("file exists at path: \(NSFileManager.defaultManager().fileExistsAtPath(path))")
+//        print("path: \(path)")
+//        print("file exists at path: \(NSFileManager.defaultManager().fileExistsAtPath(path))")
         
         if NSFileManager.defaultManager().fileExistsAtPath(path) {
             if let data = NSData(contentsOfFile: path) {
                 let unarchiver = NSKeyedUnarchiver(forReadingWithData: data)
                 checkListItems = unarchiver.decodeObjectForKey("CheckListItems") as! [CheckListItem]
                 
-                var counter = 0
                 for item in checkListItems {
-                    print("item \(counter): \(item.text)")
-                    counter++
+                    print("item \(checkListItems.indexOf(item)! + 1): \(item.text)")
                 }
+                
                 unarchiver.finishDecoding()
             }
         }
