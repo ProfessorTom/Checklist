@@ -11,7 +11,7 @@ import UIKit
 class CheckListViewController: UITableViewController, ItemDetailViewControllerDelegate {
     
     var checkListItems: [CheckListItem]
-    
+    var checklist: Checklist!
     
     required init?(coder aDecoder: NSCoder) {
         checkListItems = [CheckListItem]()
@@ -23,7 +23,8 @@ class CheckListViewController: UITableViewController, ItemDetailViewControllerDe
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        title = checklist.name
     }
 
     override func didReceiveMemoryWarning() {
