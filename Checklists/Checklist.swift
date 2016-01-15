@@ -9,8 +9,19 @@
 import Foundation
 import UIKit
 
-class Checklist: NSObject {
+class Checklist: NSObject, NSCoding {
     var name = ""
+    var items = [CheckListItem]()
+    
+    required init?(coder aDecoder: NSCoder) {
+        name = aDecoder.decodeObjectForKey("Name") as! String
+        items = aDecoder.decodeObjectForKey("Items") as! [CheckListItem]
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(name, forKey: "Name")
+        aCoder.encodeObject(items, forKey: "Items")
+    }
     
     override init() {
         super.init()

@@ -15,12 +15,14 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     required init?(coder aDecoder: NSCoder) {
         lists = [Checklist]()
         
+//        lists.append(Checklist(name: "Birthdays"))
+//        lists.append(Checklist(name: "Groceries"))
+//        lists.append(Checklist(name: "Cool Apps"))
+//        lists.append(Checklist(name: "To Do"))
+        
+        lists = [Checklist]()
         super.init(coder: aDecoder)
-
-        lists.append(Checklist(name: "Birthdays"))
-        lists.append(Checklist(name: "Groceries"))
-        lists.append(Checklist(name: "Cool Apps"))
-        lists.append(Checklist(name: "To Do"))
+        loadCheckListItems()
     }
     
     override func viewDidLoad() {
@@ -93,7 +95,7 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
 
     // pragam MARK:- segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        print("segue.indentifier: \(segue.identifier)")
+//        print("segue.indentifier: \(segue.identifier)")
         
         if segue.identifier == "ShowChecklist" {
             let controller = segue.destinationViewController as! CheckListViewController
@@ -131,5 +133,41 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
             }
         }
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    //pragma MARK:- documents directory methods
+    func documentsDirectory() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        return paths[0]
+    }
+    
+    func dataFilePath() ->String {
+        return (documentsDirectory() as NSString).stringByAppendingPathComponent("Checklists.plist")
+    }
+
+    //pragma MARK:- coder methods
+    func saveChecklists() {
+        let data = NSMutableData()
+        let archiver = NSKeyedArchiver(forWritingWithMutableData: data)
+        
+        archiver.encodeObject(lists, forKey: "Checklists")
+        archiver.finishEncoding()
+        
+        data.writeToFile(dataFilePath(), atomically: true)
+    }
+    
+    func loadCheckListItems() {
+        let path = dataFilePath()
+                print("path: \(path)")
+        //        print("file exists at path: \(NSFileManager.defaultManager().fileExistsAtPath(path))")
+        
+        if NSFileManager.defaultManager().fileExistsAtPath(path) {
+            if let data = NSData(contentsOfFile: path) {
+                let unarchiver = NSKeyedUnarchiver(forReadingWithData: data)
+                lists = unarchiver.decodeObjectForKey("Checklists") as! [Checklist]
+                unarchiver.finishDecoding()
+            }
+        }
+        
     }
 }
