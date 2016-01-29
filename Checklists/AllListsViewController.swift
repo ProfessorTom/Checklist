@@ -34,6 +34,11 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
             performSegueWithIdentifier(SHOW_CHECKLIST_SEGUE, sender: checklist)
         }
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -47,26 +52,20 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         return dataModel.lists.count
     }
 
-    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = cellForTableView(tableView)
         
-        cell.textLabel!.text = dataModel.lists[indexPath.row].name
-        cell.accessoryType = .DetailDisclosureButton
-        
-        return cell
-    }
-    
-    func cellForTableView(tableView: UITableView) -> UITableViewCell {
-        let cellIdentifier = "Cell"
+        let cellIdentifier = "ChecklistCellResuseIdentifier"
+        let checklist = dataModel.lists[indexPath.row]
         
         if let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) {
+            print("Using resuable cell for \(checklist.name)")
+            (cell as! ChecklistCell).updateCell(checklist)
             return cell
         } else {
-            return UITableViewCell(style: .Default, reuseIdentifier: cellIdentifier)
+            return ChecklistCell(reuseIdentifier: cellIdentifier, checklist: checklist)
         }
     }
-    
+
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         dataModel.indexOfSelectedChecklist = indexPath.row
         
@@ -117,23 +116,16 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
     }
     
     func listDetailViewController(controller: ListDetailViewController, didFinishAddingChecklist checklist: Checklist) {
-        let newRowIndex = dataModel.lists.count
         dataModel.lists.append(checklist)
-        
-        let indexPath = NSIndexPath(forRow: newRowIndex, inSection: 0)
-        let indexPaths = [indexPath]
-        tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+        dataModel.sortChecklists()
+        tableView.reloadData()
         
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     func listDetailViewController(controller: ListDetailViewController, didFinishEditingChecklist checklist: Checklist) {
-        if let index = dataModel.lists.indexOf(checklist) {
-            let indexPath = NSIndexPath(forRow: index, inSection: 0)
-            if let cell = tableView.cellForRowAtIndexPath(indexPath) {
-                cell.textLabel!.text = checklist.name
-            }
-        }
+        dataModel.sortChecklists()
+        tableView.reloadData()
         dismissViewControllerAnimated(true, completion: nil)
     }
     
