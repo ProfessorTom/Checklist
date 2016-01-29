@@ -58,7 +58,6 @@ class AllListsViewController: UITableViewController, ListDetailViewControllerDel
         let checklist = dataModel.lists[indexPath.row]
         
         if let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) {
-            print("Using resuable cell for \(checklist.name)")
             (cell as! ChecklistCell).updateCell(checklist)
             return cell
         } else {
