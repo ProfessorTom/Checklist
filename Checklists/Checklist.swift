@@ -13,6 +13,30 @@ class Checklist: NSObject, NSCoding {
     var name = ""
     var items = [CheckListItem]()
     
+    private var _uncheckedCount: Int {
+        get {
+            var count = 0
+            for item in items {
+                if !item.checked {
+                    count += 1
+                }
+            }
+            return count
+        }
+    }
+    
+    var uncheckedCount: Int {
+        get {
+            return _uncheckedCount
+        }
+    }
+    
+    var numberChecked: Int {
+        get {
+            return items.count - uncheckedCount
+        }
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         name = aDecoder.decodeObjectForKey("Name") as! String
         items = aDecoder.decodeObjectForKey("Items") as! [CheckListItem]
@@ -31,4 +55,5 @@ class Checklist: NSObject, NSCoding {
         self.name = name
         super.init()
     }
+    
 }
