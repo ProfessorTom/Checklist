@@ -93,10 +93,22 @@ class CheckListViewController: UITableViewController, ItemDetailViewControllerDe
     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true
     }
+    
+    func printCheckListItemArray(array: [CheckListItem]) {
+        for item in array {
+            print(item.text)
+        }
+    }
 
     override func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        checklist.items.insert(checklist.items[sourceIndexPath.row], atIndex: destinationIndexPath.row)
-        checklist.items.removeAtIndex(sourceIndexPath.row + 1)
+        let item = checklist.items[sourceIndexPath.row]
+        checklist.items.removeAtIndex(sourceIndexPath.row)
+
+        if destinationIndexPath.row == checklist.items.count {
+            checklist.items.append(item)
+        } else {
+            checklist.items.insert(item, atIndex: destinationIndexPath.row)
+        }
     }
     
     //pragma MARK:- ItemDetailViewControllerDelegate methods
