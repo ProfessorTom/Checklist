@@ -11,6 +11,9 @@ import UIKit
 class CheckListViewController: UITableViewController, ItemDetailViewControllerDelegate {
     
     var checklist: Checklist!
+    let editButtonSelector = Selector("editButtonPressed")
+    let editSegueIdentifier = "EditItem"
+    
     @IBOutlet var editButton: UIBarButtonItem!
     
     required init?(coder aDecoder: NSCoder) {
@@ -36,9 +39,9 @@ class CheckListViewController: UITableViewController, ItemDetailViewControllerDe
         let index = self.navigationItem.rightBarButtonItems!.indexOf(editButton)
         
         if tableView.editing {
-            editButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "editButtonPressed")
+            editButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: editButtonSelector)
         } else {
-            editButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editButtonPressed")
+            editButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: editButtonSelector)
         }
         
         rightBarButtonItems.insert(editButton, atIndex: index!)
@@ -131,7 +134,7 @@ class CheckListViewController: UITableViewController, ItemDetailViewControllerDe
         let controller = navigationControler.topViewController as! ItemDetailViewController
         controller.delegate = self
         
-        if segue.identifier == "EditItem" {
+        if segue.identifier == editSegueIdentifier {
             if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
                 controller.itemToEdit = checklist.items[indexPath.row]
             }
