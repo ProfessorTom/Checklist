@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="HelveticaNeue.ttc">
@@ -155,12 +156,22 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="(Name of Checklist)" id="bh9-md-BFX">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Vro-b8-8Wi">
-                            <connections>
-                                <segue destination="EJt-lH-taH" kind="show" identifier="AddItem" id="AyJ-MI-FcB"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="Vro-b8-8Wi">
+                                <connections>
+                                    <segue destination="EJt-lH-taH" kind="show" identifier="AddItem" id="AyJ-MI-FcB"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="edit" id="2kZ-ox-Icc">
+                                <connections>
+                                    <action selector="editButtonPressed" destination="abx-fW-Zcb" id="1QF-YP-0wV"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
+                    <connections>
+                        <outlet property="editButton" destination="2kZ-ox-Icc" id="SaE-BX-cox"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gbe-EE-5AJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

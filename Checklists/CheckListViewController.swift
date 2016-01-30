@@ -11,6 +11,7 @@ import UIKit
 class CheckListViewController: UITableViewController, ItemDetailViewControllerDelegate {
     
     var checklist: Checklist!
+    @IBOutlet var editButton: UIBarButtonItem!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -25,6 +26,25 @@ class CheckListViewController: UITableViewController, ItemDetailViewControllerDe
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func editButtonPressed() {
+        self.tableView.setEditing(!tableView.editing, animated: true)
+        
+        var rightBarButtonItems = self.navigationItem.rightBarButtonItems!
+        
+        let index = self.navigationItem.rightBarButtonItems!.indexOf(editButton)
+        
+        if tableView.editing {
+            editButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "editButtonPressed")
+        } else {
+            editButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: "editButtonPressed")
+        }
+        
+        rightBarButtonItems.insert(editButton, atIndex: index!)
+        rightBarButtonItems.removeAtIndex(index! + 1)
+        
+        self.navigationItem.setRightBarButtonItems(rightBarButtonItems, animated: true)
     }
 
 
@@ -65,6 +85,15 @@ class CheckListViewController: UITableViewController, ItemDetailViewControllerDe
             let indexPaths = [indexPath]
             tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: .Middle)
         }
+    }
+    
+    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+
+    override func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+        checklist.items.insert(checklist.items[sourceIndexPath.row], atIndex: destinationIndexPath.row)
+        checklist.items.removeAtIndex(sourceIndexPath.row + 1)
     }
     
     //pragma MARK:- ItemDetailViewControllerDelegate methods
